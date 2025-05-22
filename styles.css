@@ -1,0 +1,157 @@
+:root {
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --container-bg: white;
+    --container-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --input-border: #ddd;
+    --button-bg: #4CAF50;
+    --button-hover: #45a049;
+    --button-disabled: #cccccc;
+    --stats-bg: #f0f0f0;
+    --text-display-bg: #f9f9f9;
+    --current-char: yellow;
+    --correct: green;
+    --incorrect: red;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --container-bg: #1e1e1e;
+    --container-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    --input-border: #444;
+    --button-bg: #2e7d32;
+    --button-hover: #1b5e20;
+    --button-disabled: #555;
+    --stats-bg: #2d2d2d;
+    --text-display-bg: #252525;
+    --current-char: #616161;
+    --correct: #4caf50;
+    --incorrect: #f44336;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--container-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--container-shadow);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#themeToggle {
+    padding: 8px 15px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Остальные стили остаются такими же, с заменой цветов на CSS-переменные */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.controls label {
+    font-weight: bold;
+}
+
+.controls select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--input-border);
+    background-color: var(--container-bg);
+    color: var(--text-color);
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background-color: var(--container-bg);
+    color: var(--text-color);
+}
+
+button {
+    padding: 10px 15px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: var(--button-hover);
+}
+
+button:disabled {
+    background: var(--button-disabled);
+    cursor: not-allowed;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 10px;
+    background: var(--stats-bg);
+    border-radius: 5px;
+}
+
+.text-display {
+    min-height: 100px;
+    padding: 15px;
+    margin: 20px 0;
+    background: var(--text-display-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.progress-container {
+    margin-top: 30px;
+}
+
+.current-char {
+    background-color: var(--current-char);
+}
+
+.correct {
+    color: var(--correct);
+}
+
+.incorrect {
+    color: var(--incorrect);
+    text-decoration: underline;
+}

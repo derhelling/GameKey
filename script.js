@@ -58,6 +58,7 @@ const cpmDisplay = document.getElementById('cpm');
 const accuracyDisplay = document.getElementById('accuracy');
 const timeDisplay = document.getElementById('time');
 const progressChartCtx = document.getElementById('progressChart').getContext('2d');
+const keyboardContainer = document.getElementById('keyboardContainer');
 
 // Переменные состояния
 let currentText = '';
@@ -94,6 +95,9 @@ function startExercise() {
     
     startTime = new Date();
     timerInterval = setInterval(updateTimer, 1000);
+    
+    // Показать клавиатуру
+    keyboardContainer.classList.add('visible');
 }
 
 // Функция для отображения текста
@@ -121,6 +125,8 @@ function resetExercise() {
     textDisplay.textContent = 'Выберите режим и нажмите "Начать"';
     updateStats(0, 100);
     timeDisplay.textContent = '0:00';
+    keyboardContainer.classList.remove('visible');
+    clearKeyHighlights();
 }
 
 // Функция обновления таймера
@@ -163,6 +169,8 @@ function finishExercise() {
     updateProgressChart();
     
     textDisplay.innerHTML += '<p style="color: green;">Упражнение завершено!</p>';
+    keyboardContainer.classList.remove('visible');
+    clearKeyHighlights();
 }
 
 // Функция обновления графика прогресса
@@ -173,6 +181,40 @@ function updateProgressChart() {
     progressChart.data.labels = labels;
     progressChart.data.datasets[0].data = data;
     progressChart.update();
+}
+
+// Функция для очистки подсветки клавиш
+function clearKeyHighlights() {
+    document.querySelectorAll('.key').forEach(key => {
+        key.classList.remove('active');
+    });
+}
+
+// Функция для подсветки клавиши
+function highlightKey(char) {
+    clearKeyHighlights();
+    let keyChar = char === ' ' ? 'space' : char;
+    // Handle special characters
+    const specialChars = {
+        '.': '.',
+        ',': ',',
+        '-': '-',
+        '=': '=',
+        '\\': '\\',
+        '`': '`'
+    };
+    if (specialChars[keyChar]) {
+        keyChar = specialChars[keyChar];
+    }
+    const keyElement = document.querySelector(`.key[data-char="${keyChar}"]`);
+    if (keyElement) {
+        keyElement.classList.add('active');
+        setTimeout(() => {
+            keyElement.classList.remove('active');
+        }, 300); // Animation duration
+    } else {
+        console.warn(`Key not found for character: ${char}`);
+    }
 }
 
 // Инициализация приложения
@@ -228,8 +270,24 @@ function init() {
         currentCharIndex = inputText.length;
         displayText();
         
+        // Подсветка клавиши
+        const lastChar = inputText[inputText.length - 1];
+        if (lastChar) {
+            highlightKey(lastChar);
+        }
+        
         if (inputText.length === currentText.length) {
             finishExercise();
+        }
+    });
+    
+    // Обработчик нажатия клавиш для backspace
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && userInput.value.length > 0) {
+            const prevChar = userInput.value[userInput.value.length - 1];
+            highlightKey(prevChar);
+        } else if (e.key === 'Backspace') {
+            clearKeyHighlights();
         }
     });
 }
